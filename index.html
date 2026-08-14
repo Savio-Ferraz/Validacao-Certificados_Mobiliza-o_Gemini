@@ -5,45 +5,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Validação de Certificado - Mobilizadores Gemini</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #202124;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding: 20px;
     }
-    .card {
-      background: #ffffff;
-      max-width: 500px;
+    .container {
+      background-color: #ffffff;
+      max-width: 580px;
       width: 100%;
-      padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #dadce0;
+      overflow: hidden;
+    }
+    .header {
+      background-color: #1a73e8;
+      color: #ffffff;
+      padding: 24px;
       text-align: center;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    .content {
+      padding: 32px 28px;
     }
     .status-badge {
       background-color: #e6f4ea;
       color: #137333;
       border: 1px solid #ceead6;
-      padding: 12px;
+      padding: 14px;
       border-radius: 8px;
       font-size: 18px;
       font-weight: bold;
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .info-group {
+      margin-bottom: 20px;
+    }
+    .info-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #5f6368;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .info-value {
+      font-size: 16px;
+      color: #202124;
+      font-weight: 500;
     }
     .code-box {
       background-color: #e8f0fe;
       color: #1a73e8;
+      font-family: monospace;
+      font-size: 18px;
       font-weight: bold;
-      padding: 8px 16px;
+      padding: 10px 16px;
       border-radius: 6px;
       display: inline-block;
-      font-size: 16px;
-      margin-top: 5px;
+      letter-spacing: 1px;
+      border: 1px solid #d2e3fc;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 24px 0;
+    }
+    .share-section {
+      background-color: #f8f9fa;
+      border: 1px solid #e8eaed;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .share-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #202124;
+      margin-bottom: 8px;
+    }
+    .share-text {
+      font-size: 13px;
+      color: #5f6368;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .post-box {
+      background-color: #ffffff;
+      border: 1px dashed #bdc1c6;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #3c4043;
+      font-style: italic;
+      margin-bottom: 16px;
+      line-height: 1.4;
     }
     .btn-copy {
       background-color: #0a66c2;
@@ -51,52 +130,83 @@
       border: none;
       padding: 12px 20px;
       border-radius: 6px;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 14px;
       cursor: pointer;
       width: 100%;
-      margin-top: 15px;
-      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.2s;
     }
     .btn-copy:hover {
       background-color: #084e96;
     }
-    .toast {
-      display: none;
-      background-color: #323232;
-      color: #fff;
+    .footer {
+      background-color: #f8f9fa;
+      border-top: 1px solid #e0e0e0;
+      padding: 16px;
       text-align: center;
-      border-radius: 4px;
-      padding: 10px 16px;
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      font-size: 14px;
+      font-size: 12px;
+      color: #70757a;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="status-badge">
-      ✓ Certificado Autêntico
+  <div class="container">
+    <div class="header">
+      <h1>Sistema de Validação de Documentos</h1>
+      <p>Mobilizadores Gemini</p>
     </div>
 
-    <p style="color: #5f6368; margin-bottom: 5px;">Código Verificado:</p>
-    <div class="code-box" id="codigoDisplay">GEM-XXXXXX</div>
+    <div class="content">
+      <div class="status-badge">
+        ✓ Certificado Autêntico
+      </div>
 
-    <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 25px 0;">
+      <div class="info-group">
+        <div class="info-label">Código de Verificação</div>
+        <div class="code-box" id="codigoDisplay">GEM-XXXXXX</div>
+      </div>
 
-    <p style="font-size: 14px; color: #3c4043; text-align: left; line-height: 1.5;">
-      Este certificado foi emitido oficialmente para a formação <strong>Mobilizadores Gemini</strong>.
-    </p>
+      <div class="info-group">
+        <div class="info-label">Evento / Formação</div>
+        <div class="info-value">Mobilizadores Gemini</div>
+      </div>
 
-    <button class="btn-copy" onclick="copiarTexto()">Copiar Texto para LinkedIn</button>
+      <div class="info-group">
+        <div class="info-label">Status da Emissão</div>
+        <div class="info-value">Emitido e Registrado Oficialmente</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="share-section">
+        <div class="share-title">Compartilhe no LinkedIn</div>
+        <p class="share-text">
+          Copie a mensagem recomendada abaixo e compartilhe sua nova certificação com sua rede profissional:
+        </p>
+
+        <div class="post-box" id="textoPost">
+          Olha só minha nova conquista! Recebi o certificado da formação Mobilizadores Gemini! Você pode validar a autenticidade pelo link. #MobilizacaoGemini #GoogleGemini #TrainerSavio
+        </div>
+
+        <button class="btn-copy" onclick="copiarTexto()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copiar Texto para LinkedIn
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Plataforma de Autenticidade de Certificados • Equipe Savio Ferraz
+    </div>
   </div>
-
-  <div id="toast" class="toast">✓ Texto copiado!</div>
 
   <script>
     // Recupera o parâmetro 'codigo' da URL
@@ -107,21 +217,13 @@
     }
 
     function copiarTexto() {
-      const texto = `Olha só minha nova conquista! Recebi o certificado da formação Mobilizadores Gemini! Você pode validar a autenticidade pelo link. #MobilizacaoGemini #GoogleGemini #TrainerSavio`;
+      const texto = document.getElementById('textoPost').innerText.trim();
       
       navigator.clipboard.writeText(texto).then(() => {
-        mostrarToast();
+        alert('✓ Texto copiado!');
       }).catch(err => {
         alert('✓ Texto copiado!');
       });
-    }
-
-    function mostrarToast() {
-      const toast = document.getElementById('toast');
-      toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 2500);
     }
   </script>
 
