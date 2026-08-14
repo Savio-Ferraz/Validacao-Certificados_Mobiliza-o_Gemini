@@ -87,11 +87,9 @@
     .badge { display: inline-block; background: #34a853; color: white; padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: bold; margin-bottom: 12px; }
     .badge.error { background: #ea4335; }
     
-    /* Linha de informação sem força de estouro */
     .info-line { margin: 8px 0; font-size: 14px; color: #3c4043; line-height: 1.5; }
     .info-line strong { color: #202124; }
     
-    /* Destaque para o código de validação */
     .code-highlight {
       background-color: #e8f0fe;
       color: #1a73e8;
@@ -102,7 +100,6 @@
       white-space: nowrap;
     }
 
-    /* Seção Gamificação / LinkedIn */
     .linkedin-box {
       margin-top: 20px;
       padding-top: 16px;
@@ -190,6 +187,7 @@
         <div class="info-line"><strong>Participante:</strong> <span id="resNome"></span></div>
         <div class="info-line"><strong>Evento:</strong> <span id="resEvento"></span></div>
         <div class="info-line"><strong>Data de Emissão:</strong> <span id="resData"></span></div>
+        <div class="info-line"><strong>Horário da Emissão:</strong> <span id="resHora"></span></div>
         <div class="info-line"><strong>Código:</strong> <span id="resCodigo" class="code-highlight"></span></div>
 
         <div id="linkedinContainer" class="linkedin-box" style="display: none;">
@@ -247,7 +245,18 @@
           
           document.getElementById('resNome').innerText = data.nome;
           document.getElementById('resEvento').innerText = data.evento;
-          document.getElementById('resData').innerText = data.dataEmissao;
+          
+          // Separa a data e hora se vierem juntas, ou usa os campos individuais
+          if (data.horaEmissao) {
+            document.getElementById('resData').innerText = data.dataEmissao;
+            document.getElementById('resHora').innerText = data.horaEmissao;
+          } else {
+            // Tratamento caso venha tudo na mesma string (ex: "17/08/2026 14:30:00")
+            const partes = data.dataEmissao.split(' ');
+            document.getElementById('resData').innerText = partes[0] || data.dataEmissao;
+            document.getElementById('resHora').innerText = partes[1] || "Não especificado";
+          }
+
           document.getElementById('resCodigo').innerText = data.codigo;
 
           const baseUrl = "https://savio-ferraz.github.io/Validacao_Certificados_Mobilizacao_Gemini/";
@@ -265,6 +274,7 @@
           document.getElementById('resNome').innerText = "-";
           document.getElementById('resEvento').innerText = "-";
           document.getElementById('resData').innerText = "-";
+          document.getElementById('resHora').innerText = "-";
           document.getElementById('resCodigo').innerText = codigo;
 
           linkedinContainer.style.display = "none";
